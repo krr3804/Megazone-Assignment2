@@ -22,6 +22,12 @@ func PrintToExit() {
 	fmt.Println(Exit)
 }
 
+func PrintIdList(result []interface{}) {
+	for _, res := range result {
+		fmt.Println(res)
+	}
+}
+
 func PrintYamlData(fileName string, yamlData []byte) {
 	// file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 

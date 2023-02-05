@@ -5,7 +5,6 @@ import (
 	"app/utils"
 	"app/view"
 	"encoding/json"
-	"fmt"
 	"os"
 )
 
@@ -80,31 +79,35 @@ func doInsert() error {
 // 2. ID 목록 조회
 func doGetIdList() error {
 	result, err := dao.FindIdList()
-	if err != nil {
-		return err
-	}
-	for _, res := range result {
-		fmt.Println(res)
-	}
+	view.PrintIdList(result)
 
-	return nil
+	return err
 }
 
 // 3. 데이터 출력
 func doGetData() error {
+	// 조회할 데이터의 id를 입력 받음
 	id := view.GetIdInput()
+
+	// DB에 조회
 	data, err := dao.FindDataById(id)
 	if err != nil {
 		return err
 	}
+
+	// 가져온 data를 json 형식으로 변환
 	jsonData, err := json.Marshal(data)
 	if err != nil {
 		return err
 	}
+
+	// JSON -> YAML 변환
 	yamlData, err := utils.JsonToYaml(jsonData)
 	if err != nil {
 		return err
 	}
+
+	// YAML 데이터 출력
 	path, _ := os.Getwd()
 	fileName := path + "\\data.yaml"
 	view.PrintYamlData(fileName, yamlData)
