@@ -6,7 +6,8 @@ import (
 	"app/utils"
 	"app/view"
 	"encoding/json"
-	"log"
+	"fmt"
+	"os"
 )
 
 func main() {
@@ -40,16 +41,24 @@ func doInsert() {
 	var jsonData []byte = utils.YamlToJson(fileName)
 	var data map[string]interface{}
 	err := json.Unmarshal(jsonData, &data)
-	if err != nil {
-		log.Fatal(err)
-	}
+	utils.ExceptionHandler(err)
 	dao.InsertData(data)
 }
 
 func doGetIdList() {
-
+	result := dao.FindIdList()
+	for _, res := range result {
+		fmt.Println(res)
+	}
 }
 
 func doGetData() {
-
+	id := view.GetIdInput()
+	data := dao.FindDataById(id)
+	jsonData, err := json.Marshal(data)
+	utils.ExceptionHandler(err)
+	yamlData := utils.JsonToYaml(jsonData)
+	path, _ := os.Getwd()
+	fileName := path + "\\data.yaml"
+	view.PrintYamlData(fileName, yamlData)
 }

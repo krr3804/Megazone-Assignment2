@@ -21,3 +21,18 @@ func PrintWrongFileInput() {
 func PrintToExit() {
 	fmt.Println(Exit)
 }
+
+func PrintYamlData(fileName string, yamlData []byte) {
+	// file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer file.Close()
+
+	// _, err = file.Write(yamlData)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	fmt.Println(string(yamlData))
+}

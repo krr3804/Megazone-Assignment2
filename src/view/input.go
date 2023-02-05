@@ -20,6 +20,14 @@ func GetFileInput() string {
 	return input
 }
 
+func GetIdInput() string {
+	var input string
+	fmt.Println("ID를 입력하세요: ")
+	fmt.Scan(&input)
+
+	return input
+}
+
 // func validateFileInput(input string) bool {
 
 // }

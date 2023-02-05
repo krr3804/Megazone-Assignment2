@@ -2,19 +2,21 @@ package utils
 
 import (
 	"io/ioutil"
-	"log"
 
 	"sigs.k8s.io/yaml"
 )
 
 func YamlToJson(fileName string) []byte {
 	yamlFile, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
+	ExceptionHandler(err)
 	jsonData, err := yaml.YAMLToJSON(yamlFile)
-	if err != nil {
-		log.Fatal(err)
-	}
+	ExceptionHandler(err)
 	return jsonData
+}
+
+func JsonToYaml(jsonData []byte) []byte {
+	yamlData, err := yaml.JSONToYAML(jsonData)
+	ExceptionHandler(err)
+
+	return yamlData
 }
