@@ -2,6 +2,7 @@ package dao
 
 import (
 	"context"
+	"errors"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -82,6 +83,9 @@ func FindDataById(id string) (map[string]interface{}, error) {
 	var result map[string]interface{}
 
 	err = userCollection.FindOne(context.TODO(), bson.M{"_id": objectId}, opt).Decode(&result)
+	if err != nil {
+		return nil, errors.New("INF")
+	}
 
 	return result, err
 }

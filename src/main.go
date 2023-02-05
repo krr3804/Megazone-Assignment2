@@ -5,6 +5,7 @@ import (
 	"app/utils"
 	"app/view"
 	"encoding/json"
+	"errors"
 	"os"
 )
 
@@ -47,7 +48,7 @@ func navigate(menu int64) error {
 
 	// 지정된 값이 들어오지 않으면 재입력 받음
 	default:
-		view.PrintWrongInput()
+		err = errors.New("WI")
 	}
 	return err
 }
@@ -55,7 +56,10 @@ func navigate(menu int64) error {
 // 1. 데이터 입력
 func doInsert() error {
 	// 파일이름 문자열로 받아서 parser에 전달
-	fileName := view.GetFileInput()
+	fileName, err := view.GetFileInput()
+	if err != nil {
+		return err
+	}
 
 	// YAML -> JSON 변환
 	jsonData, err := utils.YamlToJson(fileName)
@@ -79,9 +83,12 @@ func doInsert() error {
 // 2. ID 목록 조회
 func doGetIdList() error {
 	result, err := dao.FindIdList()
+	if err != nil {
+		return err
+	}
 	view.PrintIdList(result)
 
-	return err
+	return nil
 }
 
 // 3. 데이터 출력

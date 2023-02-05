@@ -1,7 +1,9 @@
 package view
 
 import (
+	"errors"
 	"fmt"
+	"regexp"
 	"strconv"
 )
 
@@ -12,12 +14,15 @@ func GetMenu() int64 {
 	return validateMenuInput(input)
 }
 
-func GetFileInput() string {
+func GetFileInput() (string, error) {
 	var input string
 	fmt.Println("파일명을 입력하세요: ")
 	fmt.Scan(&input)
-
-	return input
+	var err error
+	if !validateFileInput(input) {
+		err = errors.New("WFI")
+	}
+	return input, err
 }
 
 func GetIdInput() string {
@@ -28,9 +33,12 @@ func GetIdInput() string {
 	return input
 }
 
-// func validateFileInput(input string) bool {
+func validateFileInput(input string) bool {
+	matched1, _ := regexp.MatchString(".yaml$", input)
+	matched2, _ := regexp.MatchString(",yml$", input)
 
-// }
+	return matched1 || matched2
+}
 
 func validateMenuInput(input string) int64 {
 	in, err := strconv.ParseInt(input, 10, 8)
