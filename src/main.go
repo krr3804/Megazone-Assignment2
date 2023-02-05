@@ -76,8 +76,11 @@ func doInsert() error {
 
 	// DB 입력
 	err = dao.InsertData(data)
-
-	return err
+	if err != nil {
+		return err
+	}
+	view.PrintInsertSuccess()
+	return nil
 }
 
 // 2. ID 목록 조회
@@ -117,7 +120,7 @@ func doGetData() error {
 	// YAML 데이터 출력
 	path, _ := os.Getwd()
 	fileName := path + "\\data.yaml"
-	view.PrintYamlData(fileName, yamlData)
+	err = view.PrintYamlData(fileName, yamlData)
 
 	return err
 }

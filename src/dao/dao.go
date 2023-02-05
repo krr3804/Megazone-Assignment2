@@ -46,8 +46,12 @@ func InsertData(data map[string]interface{}) error {
 	return err
 }
 
+type Data struct {
+	ID string `bson:"_id,omitempty"`
+}
+
 // Object id 목록 가져오기
-func FindIdList() ([]interface{}, error) {
+func FindIdList() ([]Data, error) {
 	client, err := connect()
 	if err != nil {
 		return nil, err
@@ -61,7 +65,7 @@ func FindIdList() ([]interface{}, error) {
 	}
 
 	// go 자료형에 mapping
-	var result []interface{}
+	var result []Data
 	err = cur.All(context.TODO(), &result)
 
 	return result, err
