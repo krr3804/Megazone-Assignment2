@@ -30,8 +30,10 @@ func PrintYamlData(fileName string, yamlData []byte) error {
 	if err != nil {
 		return err
 	}
+	// 함수가 끝날 때 file 닫기
 	defer file.Close()
 
+	// file에 yaml 데이터 쓰기
 	_, err = file.Write(yamlData)
 	if err != nil {
 		return err

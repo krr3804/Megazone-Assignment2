@@ -58,13 +58,14 @@ func FindIdList() ([]Data, error) {
 	}
 	userCollection := client.Database("db").Collection("manifest")
 
+	// Object id만 모두 조회
 	opt := options.Find().SetProjection(bson.D{{"_id", 1}})
 	cur, err := userCollection.Find(context.TODO(), bson.D{}, opt)
 	if err != nil {
 		return nil, err
 	}
 
-	// go 자료형에 mapping
+	// go struct에 mapping
 	var result []Data
 	err = cur.All(context.TODO(), &result)
 
@@ -79,13 +80,14 @@ func FindDataById(id string) (map[string]interface{}, error) {
 		return nil, err
 	}
 	userCollection := client.Database("db").Collection("manifest")
-	// Object Id로 조회
+	// Object id만 제외하고 다 mapping
 	opt := options.FindOne().SetProjection(bson.D{{"_id", 0}})
 
 	// 매개변수로 받은 id(string)을 objectID 형태로 변환
 	objectId, _ := primitive.ObjectIDFromHex(id)
 	var result map[string]interface{}
 
+	// 데이터 Object id로 조회
 	err = userCollection.FindOne(context.TODO(), bson.M{"_id": objectId}, opt).Decode(&result)
 	if err != nil {
 		return nil, errors.New("INF")
