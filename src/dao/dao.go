@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"log"
 
-	"app/domain"
-
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -30,11 +28,10 @@ func disconnect(client *mongo.Client) {
 	}
 }
 
-func InsertData(data domain.Data) {
+func InsertData(data map[string]interface{}) {
 	client := connect()
 	userCollection := client.Database("db").Collection("manifest")
 	insertResult, error := userCollection.InsertOne(context.TODO(), data)
-
 	if error != nil {
 		fmt.Println(error)
 	}
