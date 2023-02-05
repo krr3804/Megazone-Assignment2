@@ -13,6 +13,7 @@ const (
 
 // 받은 error를 출력
 func ExceptionHandler(err error) error {
+	fmt.Println()
 	fmt.Print("에러 발생: ")
 	if err.Error() == "WFI" {
 		fmt.Println(WrongFileInput)

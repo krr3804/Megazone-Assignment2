@@ -16,6 +16,7 @@ func PrintInsertSuccess() {
 
 // ID 목록 출력
 func PrintIdList(result []dao.Data) {
+	fmt.Println()
 	fmt.Println("현재 조회 가능한 데이터 목록: ")
 	for _, res := range result {
 		fmt.Println(res.ID)
@@ -24,7 +25,7 @@ func PrintIdList(result []dao.Data) {
 
 // YAML 데이터 출력
 func PrintYamlData(fileName string, yamlData []byte) error {
-	fmt.Println("데이터가 출력되었습니다.")
+	fmt.Println()
 	file, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 
 	if err != nil {
@@ -39,5 +40,6 @@ func PrintYamlData(fileName string, yamlData []byte) error {
 		return err
 	}
 	fmt.Println(string(yamlData))
+	fmt.Println("데이터가 출력되었습니다.")
 	return nil
 }
