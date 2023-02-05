@@ -6,17 +6,18 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-func YamlToJson(fileName string) []byte {
+func YamlToJson(fileName string) ([]byte, error) {
 	yamlFile, err := ioutil.ReadFile(fileName)
-	ExceptionHandler(err)
+	if err != nil {
+		return nil, err
+	}
 	jsonData, err := yaml.YAMLToJSON(yamlFile)
-	ExceptionHandler(err)
-	return jsonData
+
+	return jsonData, err
 }
 
-func JsonToYaml(jsonData []byte) []byte {
+func JsonToYaml(jsonData []byte) ([]byte, error) {
 	yamlData, err := yaml.JSONToYAML(jsonData)
-	ExceptionHandler(err)
 
-	return yamlData
+	return yamlData, err
 }
